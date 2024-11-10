@@ -1,1 +1,24 @@
+name: hish-test-cases
+on: push
+jobs:
+    run-my-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
 
+            - name: install dependencies
+              uses: actions/setup-python@v2
+              with:
+                python-version: '3.x'
+            - name: install libs
+              run: python -m unittest test.py
+    deploy:
+        needs: run-my-tests
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+
+            - name: deploy-done
+              run: echo "Deployed Successfully"
